@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f7f4" />
+    <title>Catatan Uang Harian</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Catatan Uang Harian">
+          <span class="brand-mark" aria-hidden="true">↗</span>
+          <span>Rapi<span class="brand-accent">Uang</span></span>
+        </a>
+        <span class="local-badge"
+          ><span aria-hidden="true"></span> Tersimpan di perangkat ini</span
+        >
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">KEUANGAN PRIBADI</p>
+        <h1>Uang harian,<br /><span>lebih terkendali.</span></h1>
+        <p class="intro-copy">
+          Catat setiap belanja, pantau anggaran, dan tahu berapa uang yang masih
+          tersisa hari ini.
+        </p>
+      </section>
+
+      <section class="date-panel" aria-label="Tanggal catatan">
+        <div>
+          <label for="selected-date">Lihat catatan tanggal</label>
+          <p>Ringkasan dan daftar belanja mengikuti tanggal ini.</p>
+        </div>
+        <input id="selected-date" type="date" />
+      </section>
+
+      <section class="summary-grid" aria-label="Ringkasan keuangan">
+        <article class="summary-card budget-card">
+          <div class="summary-heading">
+            <span>Anggaran harian</span>
+            <span class="summary-icon" aria-hidden="true">◎</span>
+          </div>
+          <p class="summary-value" id="budget-value">Rp0</p>
+          <p class="summary-note">Batas belanja untuk tanggal ini</p>
+        </article>
+        <article class="summary-card expense-card">
+          <div class="summary-heading">
+            <span>Total pengeluaran</span>
+            <span class="summary-icon" aria-hidden="true">↘</span>
+          </div>
+          <p class="summary-value" id="expense-value">Rp0</p>
+          <p class="summary-note" id="expense-count">Belum ada transaksi</p>
+        </article>
+        <article class="summary-card balance-card">
+          <div class="summary-heading">
+            <span>Sisa anggaran</span>
+            <span class="summary-icon" aria-hidden="true">✓</span>
+          </div>
+          <p class="summary-value" id="balance-value">Rp0</p>
+          <p class="summary-note" id="balance-note">
+            Atur anggaran untuk mulai
+          </p>
+        </article>
+      </section>
+
+      <div class="content-grid">
+        <section class="panel budget-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">RENCANA HARI INI</p>
+              <h2>Atur anggaran</h2>
+            </div>
+            <span class="panel-symbol" aria-hidden="true">✳</span>
+          </div>
+          <p class="panel-description">
+            Tentukan batas uang yang ingin kamu gunakan pada tanggal terpilih.
+          </p>
+          <form id="budget-form" class="budget-form">
+            <label for="budget-input">Anggaran (rupiah)</label>
+            <div class="input-with-prefix">
+              <span>Rp</span>
+              <input
+                id="budget-input"
+                type="number"
+                min="0"
+                step="1000"
+                inputmode="numeric"
+                placeholder="Contoh: 150000"
+                required
+              />
+            </div>
+            <button class="button button-dark" type="submit">
+              Simpan anggaran
+            </button>
+          </form>
+        </section>
+
+        <section class="panel transaction-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">CATAT PENGELUARAN</p>
+              <h2 id="form-heading">Ada belanja apa?</h2>
+            </div>
+            <span class="panel-symbol" aria-hidden="true">＋</span>
+          </div>
+          <form id="expense-form" class="expense-form">
+            <label for="expense-name">Nama pengeluaran</label>
+            <input
+              id="expense-name"
+              type="text"
+              maxlength="80"
+              placeholder="Contoh: Makan siang"
+              required
+            />
+            <div class="form-row">
+              <div>
+                <label for="expense-category">Kategori</label>
+                <select id="expense-category">
+                  <option value="Makanan">Makanan</option>
+                  <option value="Transportasi">Transportasi</option>
+                  <option value="Belanja">Belanja</option>
+                  <option value="Tagihan">Tagihan</option>
+                  <option value="Kesehatan">Kesehatan</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+              <div>
+                <label for="expense-amount">Jumlah (Rp)</label>
+                <input
+                  id="expense-amount"
+                  type="number"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="25000"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button
+                class="button button-green"
+                id="submit-expense"
+                type="submit"
+              >
+                ＋ Tambah pengeluaran
+              </button>
+              <button
+                class="button button-quiet"
+                id="cancel-edit"
+                type="button"
+                hidden
+              >
+                Batal
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <section class="panel records-panel">
+        <div class="records-heading">
+          <div>
+            <p class="eyebrow">RIWAYAT BELANJA</p>
+            <h2>Pengeluaranmu</h2>
+          </div>
+          <span class="record-date" id="record-date"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Pengeluaran</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Jumlah</th>
+                <th scope="col"><span class="visually-hidden">Aksi</span></th>
+              </tr>
+            </thead>
+            <tbody id="expense-list"></tbody>
+          </table>
+          <div class="empty-state" id="empty-state">
+            <span class="empty-icon" aria-hidden="true">🧾</span>
+            <strong>Belum ada pengeluaran</strong>
+            <p>Transaksi yang kamu tambahkan akan muncul di sini.</p>
+          </div>
+        </div>
+      </section>
+
+      <p
+        class="app-message"
+        id="app-message"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <footer>Langkah kecil hari ini, kebiasaan baik untuk nanti.</footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
